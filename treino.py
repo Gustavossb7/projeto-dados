@@ -2,8 +2,9 @@ import pandas as ps
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 from category_encoders.one_hot import OneHotEncoder
+
 
 base = ps.read_csv('titanic_train.csv')
 
@@ -52,11 +53,17 @@ base['Deck'] = base['Deck'].fillna('U')
 label_encoder = LabelEncoder()
 base['Sex'] = label_encoder.fit_transform(base['Sex'])
 
-print(base)
-
 # Criando colunas extras para Embarked e Deck (One-Hot Encoding)
 base = ps.get_dummies(base, columns=['Embarked', 'Deck'])
 
 # Removendo o que sobrou de "lixo" (colunas que não são números)
 base.drop(['Name', 'Ticket', 'Cabin', 'PassengerId'], axis=1, inplace=True, errors='ignore')
 
+
+## escalonamento
+
+scaler = StandardScaler()
+
+base[['Age', 'Fare']] = scaler.fit_transform(base[['Age', 'Fare']])
+
+print(base)

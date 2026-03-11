@@ -45,3 +45,8 @@ base = base.drop(['PassengerId','Name'],axis=1) #eliminando as colunas name e pa
 (base['Survived'].value_counts())#quantos vlaores de cada tem
 
 print(base.sort_values(by='Fare', ascending=False))
+
+print(base)
+idade_media = base['Age'].median()
+base['Age'] = base['Age'].fillna(base['Age'].median())
+print(idade_media)
