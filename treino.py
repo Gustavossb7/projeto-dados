@@ -2,6 +2,7 @@ import pandas as ps
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from category_encoders.one_hot import OneHotEncoder
 
@@ -63,7 +64,20 @@ base.drop(['Name', 'Ticket', 'Cabin', 'PassengerId'], axis=1, inplace=True, erro
 ## escalonamento
 
 scaler = StandardScaler()
-
 base[['Age', 'Fare']] = scaler.fit_transform(base[['Age', 'Fare']])
 
 print(base)
+
+#'Survived' sera a coluna alvo
+y = base['Survived']
+
+# As demais colunas serão as features
+X = base.drop('Survived', axis=1)
+
+#80% da base de dados como treino e 20% como teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Conferindo o tamanho das fatias
+print(f"Total de passageiros: {len(X)}")
+print(f"Passageiros para treino: {len(X_train)}")
+print(f"Passageiros para teste: {len(X_test)}")
