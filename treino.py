@@ -68,7 +68,7 @@ base.drop(['Name', 'Ticket', 'Cabin', 'PassengerId'], axis=1, inplace=True, erro
 scaler = StandardScaler()
 base[['Age', 'Fare']] = scaler.fit_transform(base[['Age', 'Fare']])
 
-#print(base)
+print(base)
 
 ##Train-Test Split
 
@@ -82,9 +82,9 @@ X = base.drop('Survived', axis=1)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Conferindo o tamanho das fatias
-#print(f"Total de passageiros: {len(X)}")
-#print(f"Passageiros para treino: {len(X_train)}")
-#print(f"Passageiros para teste: {len(X_test)}")
+print(f"Total de passageiros: {len(X)}")
+print(f"Passageiros para treino: {len(X_train)}")
+print(f"Passageiros para teste: {len(X_test)}")
 
 ##Árvore de decisão
 
@@ -99,13 +99,19 @@ y_pred = clf.predict(X_test)
 
 #comprarando o y_test com o y_pred
 acuracia = accuracy_score(y_test, y_pred)
-#print(f"Acurácia da Árvore: {acuracia * 100:.2f}%")
+print(f"Acurácia da Árvore: {acuracia * 100:.2f}%")
 
+#Gráfico da árvore de decisão
 plt.figure(figsize=(20,10))
 tree.plot_tree(clf, feature_names=X.columns, class_names=['Morreu', 'Sobreviveu'], filled=True)
-#plt.show()
+plt.show()
 
+#Criação da matrix de confusão
 cm = confusion_matrix(y_test, y_pred)
 ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['Morreu', 'Sobreviveu']).plot(cmap='Blues')
+
+
+#Análise de relevância das colunas
+feat_importances = ps.Series(clf.feature_importances_, index=X.columns)
+feat_importances.nlargest(5).plot(kind='barh', title='As 5 Variáveis Mais Importantes')
 plt.show()
-print('oi')
