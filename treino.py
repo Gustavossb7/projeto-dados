@@ -5,7 +5,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from category_encoders.one_hot import OneHotEncoder
-
+from sklearn import tree
+from sklearn.metrics import accuracy_score
 
 base = ps.read_csv('titanic_train.csv')
 
@@ -55,7 +56,7 @@ label_encoder = LabelEncoder()
 base['Sex'] = label_encoder.fit_transform(base['Sex'])
 
 # Criando colunas extras para Embarked e Deck (One-Hot Encoding)
-base = ps.get_dummies(base, columns=['Embarked', 'Deck'])
+base = ps.get_dummies(base, columns=['Embarked', 'Deck', 'Title'])
 
 # Removendo o que sobrou de "lixo" (colunas que não são números)
 base.drop(['Name', 'Ticket', 'Cabin', 'PassengerId'], axis=1, inplace=True, errors='ignore')
@@ -67,6 +68,8 @@ scaler = StandardScaler()
 base[['Age', 'Fare']] = scaler.fit_transform(base[['Age', 'Fare']])
 
 print(base)
+
+##Train-Test Split
 
 #'Survived' sera a coluna alvo
 y = base['Survived']
@@ -81,3 +84,22 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 print(f"Total de passageiros: {len(X)}")
 print(f"Passageiros para treino: {len(X_train)}")
 print(f"Passageiros para teste: {len(X_test)}")
+
+##Arvore de decisão
+
+#criando classificador, utilizei max_depth=3 para evitar Overfitting
+clf = tree.DecisionTreeClassifier(max_depth=3, random_state=42)
+
+#fazendo o fit com os dados de treino
+clf.fit(X_train, y_train)
+
+#usando o predict
+y_pred = clf.predict(X_test)
+
+#comprarando o y_test com o y_pred
+acuracia = accuracy_score(y_test, y_pred)
+print(f"Acurácia da Árvore: {acuracia * 100:.2f}%")
+
+plt.figure(figsize=(20,10))
+tree.plot_tree(clf, feature_names=X.columns, class_names=['Morreu', 'Sobreviveu'], filled=True)
+plt.show()
