@@ -41,7 +41,7 @@ O primeiro algoritmo escolhido foi a Árvore de Decisão. Para evitar o Overfitt
 
 Após realizar o fit com os dados de treino e o predict com os dados de teste, o modelo alcançou uma Acurácia de 81%.
 
-#imagem da árvore
+!(Imagens/árvore de decisão.png)
 
 ### 8. Matriz de Confusão
 Para ir além da acurácia, gerei uma Matriz de Confusão. Ela permite visualizar o desempenho do algoritmo em cada categoria, identificando:
@@ -50,12 +50,12 @@ Verdadeiros Positivos/Negativos: Acertos do modelo.
 
 Falsos Positivos/Negativos: Erros de classificação (onde o modelo se "confundiu").
 
-#imagem matriz
+!(Imagens/matriz de confussão.png)
 
 ### 9. Análise de Relevância (Feature Importance)
 Utilizei o atributo feature_importances_ para extrair quais variáveis foram mais determinantes para as decisões do modelo. Esta etapa é fundamental para a Explicabilidade da IA.
 
-#imagem da análise de relevância
+!(Imagens/análise de relêvancia.png)
 
 Como demonstrado no gráfico, as variáveis de maior peso foram o Título (que sintetiza gênero e idade) e a Classe social.
 
