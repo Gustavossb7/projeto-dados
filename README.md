@@ -59,7 +59,7 @@ Utilizei o atributo feature_importances_ para extrair quais variáveis foram mai
 
 Como demonstrado no gráfico, as variáveis de maior peso foram o Título (que sintetiza gênero e idade) e a Classe social.
 
-##🏆 Conclusão
+## 🏆 Conclusão
 Neste projeto, percorri todo o pipeline de Ciência de Dados: desde a extração e limpeza (Data Cleaning) até a engenharia de recursos (Feature Engineering) e modelagem.
 
 O modelo de Árvore de Decisão confirmou, através dos dados, a máxima histórica do desastre: passageiros com títulos femininos/infantis e aqueles hospedados em classes superiores tiveram chances significativamente maiores de sobrevivência. O projeto resultou em um modelo robusto com 81% de precisão em dados nunca vistos.
