@@ -8,6 +8,7 @@ from category_encoders.one_hot import OneHotEncoder
 from sklearn import tree
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.ensemble import RandomForestClassifier
 
 base = ps.read_csv('titanic_train.csv')
 
@@ -91,13 +92,13 @@ print(f"Passageiros para teste: {len(X_test)}")
 #criando classificador, utilizei max_depth=3 para evitar Overfitting
 clf = tree.DecisionTreeClassifier(max_depth=3, random_state=42)
 
-#fazendo o fit com os dados de treino
+#fazendo o fit com os dados de treino (Treinando o modelo, ele está estudando)
 clf.fit(X_train, y_train)
 
-#usando o predict
+#usando o predict (Modelo está criando suas respostas)
 y_pred = clf.predict(X_test)
 
-#comprarando o y_test com o y_pred
+#comprarando o y_test com o y_pred (Comparando as respostas do modelo com o gabarito)
 acuracia = accuracy_score(y_test, y_pred)
 print(f"Acurácia da Árvore: {acuracia * 100:.2f}%")
 
@@ -115,3 +116,12 @@ ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['Morreu', 'Sobrevive
 feat_importances = ps.Series(clf.feature_importances_, index=X.columns)
 feat_importances.nlargest(5).plot(kind='barh', title='As 5 Variáveis Mais Importantes')
 plt.show()
+
+
+##Random forest
+
+clf = RandomForestClassifier(max_depth=3, random_state=42)
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+acuracia = accuracy_score(y_test, y_pred)
+print(f"Random forest accuracia: {acuracia * 100:.2f}%")
