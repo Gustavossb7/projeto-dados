@@ -67,6 +67,17 @@ Apliquei esse algoritmo com o objetivo de comparar seu desempenho com o da Árvo
 
 Esse resultado pode ser explicado pelo fato de o dataset do Titanic ser relativamente pequeno e bem estruturado, o que limita o ganho de performance que técnicas mais complexas como o Random Forest podem oferecer.
 
+### 11. Regressão Logística com Pipeline e Validação Cruzada
+A Regressão Logística foi implementada para atuar como um modelo linear de classificação, buscando entender a probabilidade de sobrevivência com base nas variáveis do dataset. Diferente das abordagens anteriores, este tópico introduz uma estrutura de engenharia de software mais robusta:
+
+Pipeline de Dados: Utilizei a classe Pipeline do Scikit-Learn para encapsular todo o fluxo de trabalho, desde o pré-processamento (como o StandardScaler e OneHotEncoder) até a execução do modelo. Isso garante que as transformações sejam aplicadas de forma consistente tanto nos dados de treino quanto nos de teste, evitando o vazamento de dados (data leakage).
+
+Validação Cruzada (Cross-Validation): Em vez de uma única divisão entre treino e teste, apliquei o método K-Fold com 5 dobras (cv=5). O cross_val_score treina e avalia o modelo cinco vezes em diferentes partes do dataset, fornecendo uma acurácia média muito mais confiável e representativa da realidade do modelo.
+
+Interpretabilidade: Graças à estrutura do Pipeline, foi possível acessar os coeficientes do modelo final de forma isolada. Isso permitiu identificar quais variáveis (como Sexo e Classe) possuem maior peso matemático na determinação das chances de sobrevivência.
+
+A utilização desta abordagem demonstra não apenas a aplicação do algoritmo em si, mas a implementação de boas práticas de Programação Orientada a Objetos (POO) aplicadas à Ciência de Dados, tornando o código modular, escalável e pronto para ambientes de produção.
+
 ## 🏆 Conclusão
 Neste projeto, percorri todo o pipeline de Ciência de Dados: desde a extração e limpeza (Data Cleaning) até a engenharia de recursos (Feature Engineering) e modelagem.
 
