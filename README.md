@@ -59,6 +59,14 @@ Utilizei o atributo feature_importances_ para extrair quais variáveis foram mai
 
 Como demonstrado no gráfico, as variáveis de maior peso foram o Título (que sintetiza gênero e idade) e a Classe social.
 
+### 10. Random Forest
+
+O Random Forest é um algoritmo que combina múltiplas Árvores de Decisão (neste caso, 100) para gerar uma previsão mais robusta. Em problemas de classificação, o modelo utiliza o critério de votação majoritária entre as árvores; já em regressão, calcula a média das previsões individuais.
+
+Apliquei esse algoritmo com o objetivo de comparar seu desempenho com o da Árvore de Decisão previamente utilizada. Após o treinamento e avaliação, ambos os modelos apresentaram a mesma acurácia de 82%.
+
+Esse resultado pode ser explicado pelo fato de o dataset do Titanic ser relativamente pequeno e bem estruturado, o que limita o ganho de performance que técnicas mais complexas como o Random Forest podem oferecer.
+
 ## 🏆 Conclusão
 Neste projeto, percorri todo o pipeline de Ciência de Dados: desde a extração e limpeza (Data Cleaning) até a engenharia de recursos (Feature Engineering) e modelagem.
 
