@@ -2,13 +2,15 @@ import pandas as ps
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from category_encoders.one_hot import OneHotEncoder
 from sklearn import tree
 from sklearn.metrics import accuracy_score
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 
 base = ps.read_csv('titanic_train.csv')
 
@@ -125,3 +127,29 @@ clf.fit(X_train, y_train)
 y_pred = clf.predict(X_test)
 acuracia = accuracy_score(y_test, y_pred)
 print(f"Random forest accuracia: {acuracia * 100:.2f}%")
+
+
+##Regressão logistica
+
+# Criando Pipeline 
+pipeline_log = Pipeline([
+    ('scaler', StandardScaler()), 
+    ('model', LogisticRegression())
+])
+
+# Validando com Cross-Validation (5 dobras)
+scores = cross_val_score(pipeline_log, X, y, cv=5)
+print(f"Acurácia Média (Cross-Val): {scores.mean() * 100:.2f}%")
+
+# Treinando o pipeline para acessar o modelo interno
+pipeline_log.fit(X_train, y_train)
+
+# Acessando os coeficientes dentro do pipeline
+modelo_final = pipeline_log.named_steps['model']
+coeficientes = ps.DataFrame(modelo_final.coef_[0], index=X.columns, columns=['Peso'])
+coeficientes = coeficientes.sort_values(by='Peso', ascending=False)
+
+
+y_pred_log = pipeline_log.predict(X_test)
+acuracia = accuracy_score(y_test, y_pred_log)
+print(f"Regressão logistica accuracia: {acuracia * 100:.2f}%")
